@@ -1,69 +1,27 @@
-window.onload = function() {
-  console.log("Hello Rigo from the console!");
+const cardIcons = ["♦", "♥", "♠", "♣"];
+const cardNumbers = [2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K", "A"];
+const iconTopLeft = document.querySelector(".icon.top-left");
+const iconBottomRight = document.querySelector(".icon.bottom-right");
+const numberElement = document.querySelector(".number");
+const btn = document.querySelector(".btn");
 
-  const quien = [
-    "Mi perro",
-    "Mi vecino",
-    "Un amigo",
-    "Mi hermano",
-    "Un extraño"
-  ];
+function generateRandomCard(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
 
-  const accion = [
-    "se comió",
-    "se perdió",
-    "me robó",
-    "se quedó atrapado en",
-    "decidió no salir de"
-  ];
+function generateCard() {
+  const icon = generateRandomCard(cardIcons);
+  const number = generateRandomCard(cardNumbers);
 
-  const que = [
-    "mi tarea",
-    "mi teléfono",
-    "las llaves",
-    "mi comida",
-    "mi trabajo"
-  ];
+  iconTopLeft.innerHTML = icon;
+  iconBottomRight.innerHTML = icon;
+  numberElement.innerHTML = number;
 
-  const cuando = [
-    "justo antes de entregarlo.",
-    "cuando iba camino a casa.",
-    "mientras estaba en clase.",
-    "hace un rato.",
-    "en el parque."
-  ];
+  // Cambio color de iconos según el palo
+  const isRedSuit = icon === "♦" || icon === "♥";
+  iconTopLeft.style.color = isRedSuit ? "red" : "black";
+  iconBottomRight.style.color = iconTopLeft.style.color;
+}
 
-  function getRandomExcuse() {
-    const randomQuien = quien[Math.floor(Math.random() * quien.length)];
-    const randomAccion = accion[Math.floor(Math.random() * accion.length)];
-    const randomQue = que[Math.floor(Math.random() * que.length)];
-    const randomCuando = cuando[Math.floor(Math.random() * cuando.length)];
-    return `${randomQuien} ${randomAccion} ${randomQue} ${randomCuando}`;
-  }
-
-  const body = document.body;
-  body.style.margin = "0";
-  body.style.height = "100%";
-  body.style.backgroundColor = "white";
-  body.style.display = "flex";
-  body.style.flexDirection = "column"; // Cambiado a columna
-  body.style.justifyContent = "center";
-  body.style.alignItems = "center";
-  body.style.fontFamily = "Arial, sans-serif";
-  body.style.textAlign = "center";
-
-  const heading = document.createElement("h1");
-  heading.innerText = "0MG no me vas a creer pero....";
-  heading.style.color = "#000";
-  heading.style.fontSize = "2em";
-
-  const paragraph = document.createElement("p");
-  paragraph.id = "excuse";
-  paragraph.style.fontSize = "1.5em";
-  paragraph.style.color = "#000";
-  paragraph.style.fontWeight = "bold";
-  paragraph.innerText = getRandomExcuse();
-
-  body.appendChild(heading);
-  body.appendChild(paragraph);
-};
+window.onload = generateCard; // Genero una carta al cargar
+btn.addEventListener("click", generateCard); // Genero una carta al hacer clic
